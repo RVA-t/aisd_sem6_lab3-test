@@ -131,9 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AC.h" />
+    <ClInclude Include="bwt.h" />
     <ClInclude Include="Huffman.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="LZ78.h" />
+    <ClInclude Include="MTF.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

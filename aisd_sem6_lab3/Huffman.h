@@ -70,6 +70,10 @@ int huf(string filename)
 {
 	ifstream f(filename, ios::out | ios::binary);
 
+	if (!f.is_open()) {
+		cout << "невозможно открыть";
+	}
+
 	map<char, int> m;
 
 	while (!f.eof()) {
@@ -126,7 +130,7 @@ int huf(string filename)
 
 	//Расшифровка
 
-	ifstream F("output.txt", ios::in | ios::binary);
+	/*ifstream F("output.txt", ios::in | ios::binary);
 
 	Node* p = root;
 	count = 0; char byte;
@@ -139,7 +143,7 @@ int huf(string filename)
 		if (count == 8) { count = 0; byte = F.get(); }
 	}
 
-	F.close(); 
+	F.close(); */
 
 	return 0;
 }

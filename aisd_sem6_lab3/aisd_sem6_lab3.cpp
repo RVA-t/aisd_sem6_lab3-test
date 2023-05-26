@@ -2,22 +2,53 @@
 
 int main()
 {
-    //string filename = "enwik8t";
-    //
-    //huf(filename);
-    
+    setlocale(0, "Rus");
+
     string text;
     text = get_text_from_file();
 
-    //ac(text);
-    
-    
-    
-    LZ78 lz78;
-    string encode78;
+    cout << "got the text" << endl << endl;
 
-    encode78 = lz78.lz78(text, 1);
-    put_text_to_file(encode78);
+
+
+
+    //cout << "Алгоритм Хаффмата: ";
+    //string filename = "C:\\ewnik8tm";
+    //
+    //huf(filename);
+    //
+    //cout << "Готов." << endl << endl;
+
+    //cout << "Арифметическое кодирование: ";
+    //ac(text);
+    //cout << "Готово." << endl << endl;
+    
+    
+    //
+    //LZ78 lz78;
+    //string encode78, decode78;
+
+    //encode78 = lz78.lz78(text);
+    //put_text_to_file(encode78);
+    //decode78 = lz78.lz78r(encode78);
+    //put_text_to_file(decode78);
+
+    //РАБОТАЕТ не точно
+    //BWT bwt;
+    //string temp, reverse;
+    //temp = bwt.bwt(text);
+    //cout << endl << temp << endl;
+
+    ////РАБОТАЕТ
+    //vector<int> encoded = mtf_encode(temp);
+    //string decoded = mtf_decode(encoded);
+    //cout << "Encoded: ";
+    //for (int i : encoded) {
+    //    cout << i << " ";
+    //}
+    //cout << endl;
+    //cout << "Decoded: " << decoded << endl;
+
 
     
     

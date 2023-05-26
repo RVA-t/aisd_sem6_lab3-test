@@ -14,19 +14,6 @@ using namespace std;
 
 string stringhuf;
 
-string get_text_from_file()
-{
-    const string path = "enwik8t";
-    ifstream input_file(path);
-    if (!input_file.is_open()) {
-        cerr << "Could not open the file - '"
-            << path << "'" << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    return string((istreambuf_iterator<char>(input_file)), istreambuf_iterator<char>());
-}
-
 void put_text_to_file(string str)
 {
     string file;
