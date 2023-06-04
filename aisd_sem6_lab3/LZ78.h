@@ -208,58 +208,54 @@ using namespace std;
 
 class LZ78 {
 public:
-    string lz78(string s) {
-        map<string, int> dictionary; // словарь
-        int next_code = 1; // следующий код
+    //// Define a data structure to represent the dictionary
 
-        string compressed_string; // сжатая строка
+    //// Encode the input data using LZ78
+    //vector<int> lz78(string input) {
+    //    unordered_map<string, int> dictionary;
+    //    vector<int> output;
+    //    string current_sequence = "";
+    //    int code = 0;
+    //    for (char c : input) {
+    //        string new_sequence = current_sequence + c;
+    //        if (dictionary.count(new_sequence) > 0) {
+    //            // Sequence already in dictionary, update current sequence
+    //            current_sequence = new_sequence;
+    //            code = dictionary[new_sequence];
+    //        }
+    //        else {
+    //            // Sequence not in dictionary, add it and output code
+    //            dictionary[new_sequence] = dictionary.size() + 1;
+    //            output.push_back(code);
+    //            current_sequence = "";
+    //            code = c;
+    //        }
+    //    }
+    //    // Output final code
+    //    if (current_sequence != "") {
+    //        output.push_back(code);
+    //    }
+    //    return output;
+    //}
 
-        int n = s.size(); // длина строки
-        string current_string; // текущая строка
-        for (int i = 0; i < n; i++) {
-            current_string += s[i]; // добавляем символ к текущей строке
-
-            // если текущая строка не содержится в словаре, добавляем ее и код 0
-            if (dictionary.find(current_string) == dictionary.end()) {
-                dictionary[current_string] = next_code++;
-                compressed_string += "0" + current_string.back();
-                current_string = "";
-            }
-            // если текущая строка содержится в словаре, продолжаем добавлять символы
-            else if (i == n - 1) {
-                compressed_string += to_string(dictionary[current_string]);
-            }
-        }
-
-        return compressed_string;
-    }
-
-    // Функция для распаковки строки
-    string lz78r(string s) {
-        map<int, string> dictionary; // словарь
-        int next_code = 1; // следующий код
-
-        string decompressed_string; // распакованная строка
-
-        int n = s.size(); // длина строки
-        for (int i = 0; i < n; i += 2) {
-            int code = s[i] - '0'; // получаем код
-
-            // если код равен 0, добавляем новую строку в словарь
-            if (code == 0) {
-                string character = string(1, s[i + 1]);
-                dictionary[next_code++] = character;
-                decompressed_string += character;
-            }
-            // если код не равен 0, добавляем символы из соответствующей строки в словаре
-            else {
-                string previous_string = dictionary[code];
-                previous_string += s[i + 1];
-                dictionary[next_code++] = previous_string;
-                decompressed_string += previous_string;
-            }
-        }
-
-        return decompressed_string;
-    }
+    //// Decode the compressed data using LZ78
+    //string lz78r(vector<int> input) {
+    //    unordered_map<string, int> dictionary;
+    //    string output = "";
+    //    for (int code : input) {
+    //        if (code <= 255) {
+    //            // Code represents a single character
+    //            output += code;
+    //            dictionary[output] = dictionary.size() + 1;
+    //            output = "";
+    //        }
+    //        else {
+    //            // Code represents a sequence in the dictionary
+    //            string sequence = dictionary[code];
+    //            output += sequence;
+    //            dictionary[output] = dictionary.size() + 1;
+    //        }
+    //    }
+    //    return output;
+    //}
 };

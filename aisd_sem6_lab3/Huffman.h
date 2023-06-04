@@ -66,7 +66,7 @@ void print(Node* root, int k) {
 	}
 }
 
-int huf(string filename)
+int huf(string filename, string filename4write)
 {
 	ifstream f(filename, ios::out | ios::binary);
 
@@ -112,7 +112,7 @@ int huf(string filename)
 
 	f.clear(); f.seekg(0);
 
-	ofstream g("output.txt", ios::out | ios::binary);
+	ofstream g(filename4write, ios::out | ios::binary);
 
 	int count = 0; char buf = 0;
 	while (!f.eof()) {

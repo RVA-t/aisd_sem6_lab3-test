@@ -11,8 +11,25 @@
 #include "windows.h"
 
 using namespace std;
+pair<string, int> BWT(string);
+string DecodeBWT(pair<string, int>);
+string LShift(string, int);
+bool Test();
 
-string stringhuf;
+//string stringhuf;
+
+string get_text_from_file()
+{
+    const string path = "C:\\enwik8tm";
+    ifstream input_file(path);
+    if (!input_file.is_open()) {
+        cerr << "Could not open the file - '"
+            << path << "'" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    return string((istreambuf_iterator<char>(input_file)), istreambuf_iterator<char>());
+}
 
 void put_text_to_file(string str)
 {

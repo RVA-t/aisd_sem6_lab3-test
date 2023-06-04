@@ -10,46 +10,65 @@ int main()
     cout << "got the text" << endl << endl;
 
 
+    // хаффмана и арифметическое работют.
 
-
-    //cout << "Алгоритм Хаффмата: ";
-    //string filename = "C:\\ewnik8tm";
-    //
-    //huf(filename);
-    //
-    //cout << "Готов." << endl << endl;
+    cout << "Алгоритм Хаффмата: ";
+    string filename = "enwik8";
+    
+    huf(filename);
+    
+    cout << "Готов." << endl << endl;
 
     //cout << "Арифметическое кодирование: ";
     //ac(text);
     //cout << "Готово." << endl << endl;
-    
-    
+     
     //
-    //LZ78 lz78;
-    //string encode78, decode78;
+    
+    
+    // LZ78 надо доделать !!!
 
-    //encode78 = lz78.lz78(text);
-    //put_text_to_file(encode78);
-    //decode78 = lz78.lz78r(encode78);
-    //put_text_to_file(decode78);
+   /* LZ78 lz78;
+    string encode78, decode78;
 
-    //РАБОТАЕТ не точно
-    //BWT bwt;
-    //string temp, reverse;
-    //temp = bwt.bwt(text);
-    //cout << endl << temp << endl;
+    lz78.lz78(text);
+    put_text_to_file(encode78);
+    decode78 = lz78.lz78r(encode78);
+    put_text_to_file(decode78);*/
 
-    ////РАБОТАЕТ
-    //vector<int> encoded = mtf_encode(temp);
+
+
+    // 4 пункт
+    //РАБОТАЕТ
+    //pair<string, int> result = BWT(text);
+    //cout << endl << "BWT code is: (\"" << result.first << "\", " << result.second << ")" << endl;
+    //string decoded = DecodeBWT(result);
+    //cout << decoded;
+
+    //РАБОТАЕТ
+    //cout << "mtf: ";
+    //vector<int> encoded = mtf_encode(text);
     //string decoded = mtf_decode(encoded);
-    //cout << "Encoded: ";
-    //for (int i : encoded) {
-    //    cout << i << " ";
+    //std::ofstream out;          // поток для записи
+    //out.open("tempmtf4");      // открываем файл для записи
+    //if (out.is_open()) {
+    //    for (int i : encoded) {
+    //        out << i << " ";
+    //    }
     //}
-    //cout << endl;
-    //cout << "Decoded: " << decoded << endl;
+    //out.close();
+    //cout << "Готово." << endl << endl;
+
+    //MTF mtf;
+    //string a;
+    //a = mtf.encode(text);
+    //cout << a;
 
 
+
+    //cout << "Huffman: ";
+    //huf("tempmtf4", "resultcoding4");
+    //cout << "Готово." << endl << endl;
     
     
     //string text, encodetext;

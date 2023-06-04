@@ -1,69 +1,67 @@
 #include "MTF.h"
 
-class BWT {
-public:
-    string bwt(string s) {
-        s += "$"; // добавляем символ конца строки
-
-        int n = s.size(); // длина строки
-
-        // создаем массив суффиксов
-        string* suffixes = new string[n];
-        for (int i = 0; i < n; i++)
-            suffixes[i] = s.substr(i, n - i);
-
-        // сортируем массив суффиксов
-        sort(suffixes, suffixes + n);
-
-        // создаем массив индексов
-        int* indexes= new int[n];
-        for (int i = 0; i < n; i++)
-            indexes[i] = n - suffixes[i].size();
-
-        // создаем преобразованную строку
-        string transformed_string;
-        for (int i = 0; i < n; i++)
-            transformed_string += s[(indexes[i] - 1 + n) % n];
-
-        return transformed_string;
+pair<string, int> BWT(string input)
+{
+    vector<string> comb; pair<string, int> result = make_pair("", 0);
+    //создаем словарь сдвинутых слов
+    for (int i = 0; i < input.length(); i++)
+        comb.push_back(LShift(input, i));
+    //сортируем и берем последнюю букву каждого слова
+    sort(comb.begin(), comb.end());
+    for (int i = 0; i < comb.size(); i++)
+    {
+        result.first += comb[i][comb[i].length() - 1];
+        if (comb[i] == input)
+            result.second = i;
     }
-
-    // Функция для распаковки строки
-    string bwtr(string s) {
-        int n = s.size(); // длина строки
-
-        // создаем таблицу частот символов
-        int freq[256] = { 0 };
-        for (int i = 0; i < n; i++)
-            freq[s[i]]++;
-
-        // создаем таблицу индексов первого вхождения символа
-        int first_index[256] = { 0 };
-        int sum = 0;
-        for (int i = 0; i < 256; i++) {
-            first_index[i] = sum;
-            sum += freq[i];
-        }
-
-        // создаем таблицу индексов следующего символа
-        int* next_index = new int[n];
-        for (int i = 0; i < n; i++) {
-            next_index[first_index[s[i]]] = i;
-            first_index[s[i]]++;
-        }
-
-        // создаем исходную строку
-        string original_string;
-        int current_index = 0;
-        for (int i = 0; i < n; i++) {
-            original_string += s[current_index];
-            current_index = next_index[current_index];
-        }
-
-        // удаляем символ конца строки
-        original_string.erase(original_string.size() - 1);
-
-        return original_string;
+    return result;
+}
+string DecodeBWT(pair<string, int> in)
+{
+    string input = in.first;
+    vector<string> comb;
+    if (input.length() == 1) return input;
+    //создаем словарь букв
+    for (int i = 0; i < input.length(); i++)
+        comb.push_back(string(1, input[i]));
+    sort(comb.begin(), comb.end());
+    if (input.length() == 2) goto end;
+    //воссоздаем слово
+    for (int i = 0; i < input.length() - 2; i++)
+    {
+        for (int j = 0; j < input.length(); j++)
+            comb[j] = input[j] + comb[j];
+        sort(comb.begin(), comb.end());
     }
+end:;
+    for (int j = 0; j < input.length(); j++)
+        comb[j] += input[j];
+    return comb[in.second];
+}
+string LShift(string input, int shift)
+{
+    string result = input.substr(input.length() - shift);//берем символы с конца
+    result += input.substr(0, input.length() - shift);//берем символы с начала
+    return result;
+}
 
-};
+bool Test()
+{
+    cout << "\nTesting..." << endl;
+    for (int i = 0; i < 10000; i++)
+    {
+        //генерируем случайную строку
+        string randInput = "";
+        for (int j = rand() % 100; j >= 0; j--)
+            randInput += 33 + rand() % 90;
+
+        string decoded = DecodeBWT(BWT(randInput));
+        if (decoded != randInput)
+        {
+            cout << "Test failed!\n" << decoded << " != " << randInput << endl;
+            return false;
+        }
+    }
+    cout << "Test completed successfully!" << endl;
+    return true;
+}
