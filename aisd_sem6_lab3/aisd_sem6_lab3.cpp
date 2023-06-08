@@ -17,7 +17,7 @@ int main()
     string filename = "C:\\enwik8tm";
     
     auto begin1 = std::chrono::steady_clock::now();
-    huf("D:\\huf.txt");
+    huf("D:\\enwik8tm", "D:\\huf.txt");
     auto end1 = std::chrono::steady_clock::now();
     auto elapsed_ms1 = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin1);
     std::cout << "¬рем€: " << elapsed_ms1.count() << " в мс \n";
@@ -70,7 +70,7 @@ int main()
     }
     out.close();
 
-    huf("D:\\bwtmtfhuf.txt");
+    huf("tempmtf4" ,"D:\\bwtmtfhuf.txt");
     auto end4 = std::chrono::steady_clock::now();
     auto elapsed_ms4 = std::chrono::duration_cast<std::chrono::milliseconds>(end4 - begin4);
     std::cout << "¬рем€: " << elapsed_ms4.count() << " в мс \n";

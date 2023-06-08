@@ -66,10 +66,10 @@ void print(Node* root, int k) {
 	}
 }
 
-int huf(string filename4write)
+int huf(string temp, string filename4write)
 {
 	const string path = "D:\\enwik8tm";
-	ifstream f(path, ios::out | ios::binary);
+	ifstream f(temp, ios::out | ios::binary);
 
 	if (!f.is_open()) {
 		cout << "невозможно открыть";
