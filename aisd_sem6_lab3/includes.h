@@ -8,13 +8,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
+#include <chrono>
+#include <set>
+#include <conio.h>
+#include <ctype.h>
 #include "windows.h"
 
 using namespace std;
-pair<string, int> BWT(string);
-string DecodeBWT(pair<string, int>);
-string LShift(string, int);
-bool Test();
 
 //string stringhuf;
 
@@ -37,7 +37,7 @@ void put_text_to_file(string str)
     cout << "Введите название сохраняемого файла: ";
     cin >> file;
     ofstream out;          // поток для записи
-    out.open(file);      // открываем файл для записи
+    out.open("D:\\" + file);      // открываем файл для записи
     if (out.is_open())
     {
         out << str << std::endl;

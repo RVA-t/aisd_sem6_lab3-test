@@ -9,120 +9,82 @@ int main()
 
     cout << "got the text" << endl << endl;
 
+    const int lenght = text.length();
 
-    // хаффмана и арифметическое работют.
+    //// хаффмана и арифметическое работют.
 
     cout << "Алгоритм Хаффмата: ";
-    string filename = "enwik8";
+    string filename = "C:\\enwik8tm";
     
-    huf(filename);
-    
+    auto begin1 = std::chrono::steady_clock::now();
+    huf("D:\\huf.txt");
+    auto end1 = std::chrono::steady_clock::now();
+    auto elapsed_ms1 = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin1);
+    std::cout << "Время: " << elapsed_ms1.count() << " в мс \n";
     cout << "Готов." << endl << endl;
 
-    //cout << "Арифметическое кодирование: ";
-    //ac(text);
-    //cout << "Готово." << endl << endl;
-     
+
+
+    //// РАБОТАЕТ НЕ КОРЕКТНО (КАК РЕАЛИЗОВАТЬ ДЛЯ БОЛЬШИХ ДАННЫХ НЕ ПОНИМАЮ)
+    cout << "Арифметическое кодирование: ";
+    auto begin2 = std::chrono::steady_clock::now();
+    ac(text);
+    auto end2 = std::chrono::steady_clock::now();
+    auto elapsed_ms2 = std::chrono::duration_cast<std::chrono::milliseconds>(end2 - begin2);
+    std::cout << "Время: " << elapsed_ms2.count() << " в мс \n";
+    cout << "Готово." << endl << endl;
+
+ 
     //
-    
-    
-    // LZ78 надо доделать !!!
+    //
+    //// LZ78 работает
 
-   /* LZ78 lz78;
+    LZ78 lz78;
     string encode78, decode78;
-
-    lz78.lz78(text);
+    cout << "Алгоритм LZ78: ";
+    auto begin3 = std::chrono::steady_clock::now();
+    encode78 = lz78.lz78(text, 1);
+    auto end3 = std::chrono::steady_clock::now();
+    auto elapsed_ms3 = std::chrono::duration_cast<std::chrono::milliseconds>(end3 - begin3);
+    std::cout << "Время: " << elapsed_ms3.count() << " в мс \n";
+    cout << "Готов." << endl << endl;
     put_text_to_file(encode78);
-    decode78 = lz78.lz78r(encode78);
-    put_text_to_file(decode78);*/
-
-
-
-    // 4 пункт
-    //РАБОТАЕТ
-    //pair<string, int> result = BWT(text);
-    //cout << endl << "BWT code is: (\"" << result.first << "\", " << result.second << ")" << endl;
-    //string decoded = DecodeBWT(result);
-    //cout << decoded;
-
-    //РАБОТАЕТ
-    //cout << "mtf: ";
-    //vector<int> encoded = mtf_encode(text);
-    //string decoded = mtf_decode(encoded);
-    //std::ofstream out;          // поток для записи
-    //out.open("tempmtf4");      // открываем файл для записи
-    //if (out.is_open()) {
-    //    for (int i : encoded) {
-    //        out << i << " ";
-    //    }
-    //}
-    //out.close();
-    //cout << "Готово." << endl << endl;
-
-    //MTF mtf;
-    //string a;
-    //a = mtf.encode(text);
-    //cout << a;
-
-
-
-    //cout << "Huffman: ";
-    //huf("tempmtf4", "resultcoding4");
-    //cout << "Готово." << endl << endl;
-    
-    
-    //string text, encodetext;
-    //text = get_text_from_file();
-
-
-    ////put_text_to_file(text);
-
-    //int Hchoice = 0;
-
-    //Huffman huffman;
-
-    //huffman.buildHuffmanTree(text);
-
-    //cout << "------------------------------------------------------------------------------------" << endl << endl << endl;
-    //cout << stringhuf;
-    //put_text_to_file(stringhuf);
-    //cout << endl;
-
-    //RKE rke;
-    //cout << rke.RKEencode(text);;
-
-
-    //LZ78 lz78;
-    //string encodeLZ78;
-
-    //encodeLZ78 = lz78.lz78(text, 1);;
-    //cout << endl << lz78.lz78(text, 1);;
-
-    //cout << endl << lz78.lz78(encodeLZ78, 2);;
-
-    //// BWT
-
-    //int* suffix_arr = computeSuffixArray(text, len_text);;
-
-    //char* bwt_arr = findLastChar(text, suffix_arr, len_text);;
-
-    //printf("Input text : %s\n", text);;
-
-    //printf("Burrows - Wheeler Transform : %s\n", bwt_arr);;
-
-    //// 
-
-    //MTF mtf;
-    //string a;
-
-    //a = text;
-    //cout << endl << "encoded = ";
-    //a = mtf.encode(a);;
-    //cout << a << "; decoded = " << mtf.decode(a); << endl;
 
 
 
 
+    //// 4 пункт
+    ////РАБОТАЕТ
+
+    cout << "4 ПУНКТ BWT->MTF->HUF: " << endl;
+    auto begin4 = std::chrono::steady_clock::now();
+    string bwt_result = bwt_encode(text);
+    vector<int> encoded = mtf_encode(bwt_result);
+    string decoded = mtf_decode(encoded);
+    std::ofstream out;          // поток для записи
+    out.open("tempmtf4");      // открываем файл для записи
+    if (out.is_open()) {
+        for (int i : encoded) {
+            out << i << " ";
+        }
+    }
+    out.close();
+
+    huf("D:\\bwtmtfhuf.txt");
+    auto end4 = std::chrono::steady_clock::now();
+    auto elapsed_ms4 = std::chrono::duration_cast<std::chrono::milliseconds>(end4 - begin4);
+    std::cout << "Время: " << elapsed_ms4.count() << " в мс \n";
+ 
+
+    cout << "Алгоритм RLE: ";
+    auto begin5 = std::chrono::steady_clock::now();
+    string rle = rle_encode(text);
+    auto end5 = std::chrono::steady_clock::now();
+    auto elapsed_ms5 = std::chrono::duration_cast<std::chrono::milliseconds>(end5 - begin5);
+    std::cout << "Время: " << elapsed_ms5.count() << " в мс \n";
+    put_text_to_file(rle);
+
+    cout << "Готов.";
 
     return 0;
 }

@@ -1,67 +1,45 @@
 #include "MTF.h"
 
-pair<string, int> BWT(string input)
-{
-    vector<string> comb; pair<string, int> result = make_pair("", 0);
-    //создаем словарь сдвинутых слов
-    for (int i = 0; i < input.length(); i++)
-        comb.push_back(LShift(input, i));
-    //сортируем и берем последнюю букву каждого слова
-    sort(comb.begin(), comb.end());
-    for (int i = 0; i < comb.size(); i++)
-    {
-        result.first += comb[i][comb[i].length() - 1];
-        if (comb[i] == input)
-            result.second = i;
+string bwt_encode(const string& text) {
+    string result(text.size(), ' ');
+
+    for (int i = 0; i < text.size(); i++) {
+        result[i] = text[(i + text.size() - 1) % text.size()];
     }
-    return result;
-}
-string DecodeBWT(pair<string, int> in)
-{
-    string input = in.first;
-    vector<string> comb;
-    if (input.length() == 1) return input;
-    //создаем словарь букв
-    for (int i = 0; i < input.length(); i++)
-        comb.push_back(string(1, input[i]));
-    sort(comb.begin(), comb.end());
-    if (input.length() == 2) goto end;
-    //воссоздаем слово
-    for (int i = 0; i < input.length() - 2; i++)
-    {
-        for (int j = 0; j < input.length(); j++)
-            comb[j] = input[j] + comb[j];
-        sort(comb.begin(), comb.end());
-    }
-end:;
-    for (int j = 0; j < input.length(); j++)
-        comb[j] += input[j];
-    return comb[in.second];
-}
-string LShift(string input, int shift)
-{
-    string result = input.substr(input.length() - shift);//берем символы с конца
-    result += input.substr(0, input.length() - shift);//берем символы с начала
+
+    sort(result.begin(), result.end());
+
     return result;
 }
 
-bool Test()
-{
-    cout << "\nTesting..." << endl;
-    for (int i = 0; i < 10000; i++)
-    {
-        //генерируем случайную строку
-        string randInput = "";
-        for (int j = rand() % 100; j >= 0; j--)
-            randInput += 33 + rand() % 90;
+string bwt_decode(const string& bwt_text) {
+    int n = bwt_text.size();
+    string sorted_text = bwt_text;
+    sort(sorted_text.begin(), sorted_text.end());
 
-        string decoded = DecodeBWT(BWT(randInput));
-        if (decoded != randInput)
-        {
-            cout << "Test failed!\n" << decoded << " != " << randInput << endl;
-            return false;
-        }
+    vector<int> next(n);
+    vector<int> count(256, 0);
+
+    for (int i = 0; i < n; i++) {
+        count[bwt_text[i]]++;
     }
-    cout << "Test completed successfully!" << endl;
-    return true;
+
+    for (int i = 1; i < 256; i++) {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = 0; i < n; i++) {
+        next[count[bwt_text[i]] - 1] = i;
+        count[bwt_text[i]]--;
+    }
+
+    string result(n, ' ');
+    int index = 0;
+
+    for (int i = 0; i < n; i++) {
+        result[i] = sorted_text[index];
+        index = next[index];
+    }
+
+    return result;
 }
